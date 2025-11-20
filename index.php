@@ -21,54 +21,31 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <title>Formulario Procesado - Anime World</title>
         <!-- Enlace a fuentes externas para consistencia con la página principal -->
         <link href='https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap' rel='stylesheet'>
+        <!-- Bootstrap CSS -->
+        <link href='https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css' rel='stylesheet' integrity='sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH' crossorigin='anonymous'>
         <style>
             body {
                 font-family: 'Roboto', sans-serif;
-                margin: 0;
-                padding: 0;
                 background-color: #121212;
                 color: #ffffff;
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                min-height: 100vh;
-            }
-            .container {
-                background-color: #1e1e1e;
-                padding: 30px;
-                border-radius: 8px;
-                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-                max-width: 600px;
-                width: 100%;
-                text-align: left;
             }
             h1 {
                 color: #f47521;
-                text-align: center;
-            }
-            p {
-                margin: 10px 0;
-                line-height: 1.6;
             }
             strong {
                 color: #f47521;
             }
             a {
-                display: block;
-                text-align: center;
                 color: #f47521;
-                text-decoration: none;
-                font-weight: bold;
-                margin-top: 20px;
             }
             a:hover {
                 text-decoration: underline;
             }
         </style>
     </head>
-    <body>
-        <div class='container'>
-            <h1>¡Gracias por tu envío!</h1>
+    <body class='d-flex justify-content-center align-items-center min-vh-100'>
+        <div class='container bg-dark p-4 rounded shadow text-light' style='max-width: 600px;'>
+            <h1 class='text-center'>¡Gracias por tu envío!</h1>
             <p><strong>Nombre:</strong> $nombre</p>
             <p><strong>Email:</strong> $email</p>
             <p><strong>Edad:</strong> $edad</p>
@@ -79,7 +56,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <p><strong>¿Lo Recomendarías?</strong> $recomendar</p>
             <p><strong>Suscribirse a Newsletter:</strong> $newsletter</p>
             <p><strong>Razón:</strong> $razon</p>
-            <a href='index.html'>Volver a la página principal</a>
+            <a href='index.html' class='d-block text-center fw-bold mt-3'>Volver a la página principal</a>
         </div>
     </body>
     </html>";
