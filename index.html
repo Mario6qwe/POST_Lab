@@ -3,266 +3,415 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Anime World - Inspired by Crunchyroll</title>
-    <!-- Enlace a fuentes externas -->
+    <title>Anime World - Inspirado en Crunchyroll</title>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
-    <!-- Estilos CSS integrados para la página -->
+    <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        body {
+        body { 
             font-family: 'Roboto', sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #121212;
-            color: #ffffff;
+            overflow-x: hidden;
         }
+
+        /* Partículas flotantes de fondo */
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: rgba(255, 152, 0, 0.6);
+            border-radius: 50%;
+            animation: float 15s infinite ease-in-out;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) translateX(0); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateY(-100vh) translateX(50px); opacity: 0; }
+        }
+
+        /* Animación del header */
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
         header {
-            background-color: #000000;
-            color: #f47521;
-            text-align: center;
-            padding: 40px 20px;
-            border-bottom: 4px solid #f47521;
+            animation: fadeInDown 1s ease-out;
         }
-        header h1 {
-            margin: 0;
-            font-size: 2.5em;
+
+        /* Efecto de brillo en el título */
+        @keyframes shine {
+            0% { background-position: -200%; }
+            100% { background-position: 200%; }
         }
-        header p {
-            margin: 10px 0 0;
-            color: #ffffff;
+
+        .shine-text {
+            background: linear-gradient(90deg, #ff9800 0%, #fff 50%, #ff9800 100%);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: shine 3s linear infinite;
         }
-        nav {
-            background-color: #000000;
-            overflow: hidden;
-            border-bottom: 1px solid #333333;
+
+        /* Animación de entrada para secciones */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
-        nav a {
-            float: left;
-            display: block;
-            color: #ffffff;
-            text-align: center;
-            padding: 16px 24px;
-            text-decoration: none;
-            font-weight: bold;
-            transition: background-color 0.3s;
+
+        .fade-in-up {
+            animation: fadeInUp 0.8s ease-out forwards;
+            opacity: 0;
         }
-        nav a:hover {
-            background-color: #f47521;
-            color: #000000;
-        }
-        main {
-            padding: 20px;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-        section {
-            margin-bottom: 40px;
-        }
-        h2 {
-            color: #f47521;
-            border-bottom: 2px solid #f47521;
-            padding-bottom: 10px;
-        }
-        p {
-            line-height: 1.6;
-        }
-        ul {
-            list-style-type: none;
-            padding: 0;
-        }
-        ul li {
-            background-color: #1e1e1e;
-            margin: 10px 0;
-            padding: 15px;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-        }
-        img {
-            max-width: 100%;
-            height: auto;
-            border-radius: 8px;
-            margin: 10px 0;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-        }
-        iframe {
-            width: 100%;
-            height: 315px;
-            border: none;
-            border-radius: 8px;
-            margin: 10px 0;
-        }
-        form {
-            background-color: #1e1e1e;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            margin-bottom: 20px;
-        }
-        label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: bold;
-        }
-        input[type="text"],
-        input[type="email"],
-        input[type="number"],
-        select,
-        textarea {
-            width: 100%;
-            padding: 10px;
-            margin-bottom: 15px;
-            border: 1px solid #333333;
-            border-radius: 4px;
-            background-color: #121212;
-            color: #ffffff;
-        }
-        input[type="radio"],
-        input[type="checkbox"] {
-            margin-right: 10px;
-        }
-        input[type="submit"] {
-            background-color: #f47521;
-            color: #000000;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            font-weight: bold;
-        }
-        input[type="submit"]:hover {
-            background-color: #d65f1a;
-        }
-        footer {
-            background-color: #000000;
-            color: #ffffff;
-            text-align: center;
-            padding: 20px;
-            border-top: 1px solid #333333;
+
+        /* Hover effect para items de lista */
+        .anime-card {
+            transition: all 0.3s ease;
             position: relative;
-            width: 100%;
-            bottom: 0;
+            overflow: hidden;
         }
-        footer p {
-            margin: 5px 0;
+
+        .anime-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 152, 0, 0.2), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .anime-card:hover::before {
+            left: 100%;
+        }
+
+        .anime-card:hover {
+            transform: translateY(-5px) scale(1.02);
+            box-shadow: 0 10px 30px rgba(255, 152, 0, 0.3);
+            border-color: #ff9800;
+        }
+
+        /* Animación de pulso para botones */
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .pulse-btn {
+            animation: pulse 2s infinite;
+        }
+
+        /* Efecto de zoom en imágenes */
+        .zoom-img {
+            transition: transform 0.5s ease;
+            overflow: hidden;
+        }
+
+        .zoom-img:hover {
+            transform: scale(1.1);
+        }
+
+        .img-container {
+            overflow: hidden;
+            border-radius: 0.5rem;
+        }
+
+        /* Animación de entrada escalonada */
+        .stagger-1 { animation-delay: 0.1s; }
+        .stagger-2 { animation-delay: 0.2s; }
+        .stagger-3 { animation-delay: 0.3s; }
+        .stagger-4 { animation-delay: 0.4s; }
+        .stagger-5 { animation-delay: 0.5s; }
+
+        /* Efecto de onda en el navbar */
+        nav a {
+            position: relative;
+            transition: color 0.3s ease;
+        }
+
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 50%;
+            width: 0;
+            height: 3px;
+            background: #ff9800;
+            transition: all 0.3s ease;
+            transform: translateX(-50%);
+        }
+
+        nav a:hover::after {
+            width: 100%;
+        }
+
+        /* Animación de carga */
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Efecto de resplandor */
+        .glow {
+            box-shadow: 0 0 20px rgba(255, 152, 0, 0.5);
+            transition: box-shadow 0.3s ease;
+        }
+
+        .glow:hover {
+            box-shadow: 0 0 30px rgba(255, 152, 0, 0.8);
+        }
+
+        /* Animación del formulario */
+        .form-input {
+            transition: all 0.3s ease;
+        }
+
+        .form-input:focus {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 152, 0, 0.3);
+        }
+
+        /* Scroll suave */
+        html {
+            scroll-behavior: smooth;
         }
     </style>
 </head>
-<body>
-    <!-- Encabezado de la página -->
-    <header>
-        <h1>Bienvenido al Mundo del Anime</h1>
-        <p>Explora el fascinante universo de la animación japonesa</p>
+<body class="bg-[#121212] text-white">
+
+    <!-- Partículas de fondo -->
+    <div class="particles" id="particles"></div>
+
+    <!-- Header -->
+    <header class="bg-black text-orange-500 text-center py-16 border-b-4 border-orange-500 relative z-10">
+        <h1 class="text-5xl md:text-6xl font-bold shine-text">Bienvenido al Mundo del Anime</h1>
+        <p class="text-xl mt-4 text-gray-300">Explora el fascinante universo de la animación japonesa</p>
     </header>
-    <!-- Barra de navegación con enlaces a secciones -->
-    <nav>
-        <a href="#inicio">Inicio</a>
-        <a href="#parrafos">¿Qué es el Anime?</a>
-        <a href="#lista">Top Animes</a>
-        <a href="#graficos">Galería</a>
-        <a href="#videos">Videos</a>
-        <a href="#formulario">Formulario</a> <!-- Enlace agregado para acceder al formulario -->
+
+    <!-- Navbar -->
+    <nav class="bg-black sticky top-0 z-50 border-b border-gray-800 shadow-lg">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="flex flex-wrap justify-center gap-6 py-4 text-lg font-bold">
+                <a href="#inicio" class="hover:text-orange-500 transition">Inicio</a>
+                <a href="#parrafos" class="hover:text-orange-500 transition">¿Qué es?</a>
+                <a href="#lista" class="hover:text-orange-500 transition">Top Animes</a>
+                <a href="#graficos" class="hover:text-orange-500 transition">Galería</a>
+                <a href="#videos" class="hover:text-orange-500 transition">Videos</a>
+                <a href="#formulario" class="hover:text-orange-500 transition">Formulario</a>
+            </div>
+        </div>
     </nav>
-    <!-- Contenido principal de la página -->
-    <main>
-        <!-- Sección de introducción -->
-        <section id="inicio">
-            <h2>Introducción</h2>
-            <p>El anime es una forma de animación que se originó en Japón y ha ganado popularidad mundial. Cubre una amplia gama de géneros y estilos, desde acción y aventura hasta romance y ciencia ficción.</p>
+
+    <!-- Main Content -->
+    <main class="max-w-7xl mx-auto px-6 py-10 space-y-16 relative z-10">
+
+        <section id="inicio" class="fade-in-up">
+            <h2 class="text-4xl font-bold text-orange-500 border-b-4 border-orange-500 pb-3 inline-block">Introducción</h2>
+            <p class="mt-6 text-lg leading-relaxed text-gray-300">
+                El anime es una forma de animación que se originó en Japón y ha ganado popularidad mundial. Cubre una amplia gama de géneros y estilos, desde acción y aventura hasta romance y ciencia ficción.
+            </p>
         </section>
-        <!-- Sección de párrafos explicativos -->
-        <section id="parrafos">
-            <h2>¿Qué es el Anime?</h2>
-            <p>El anime, un término que proviene de la abreviatura de "animation" en japonés, se refiere a la animación producida en Japón. A diferencia de las caricaturas occidentales, el anime a menudo aborda temas complejos y es dirigido a audiencias de todas las edades.</p>
-            <p>Desde sus inicios en el siglo XX, el anime ha evolucionado gracias a pioneros como Osamu Tezuka, conocido como el "Dios del Manga". Hoy en día, series como "Dragon Ball" y "One Piece" han capturado la imaginación de millones.</p>
-            <p>El impacto cultural del anime es inmenso, influyendo en la moda, la música y el cine global. Festivales como el Anime Expo reúnen a fanáticos de todo el mundo para celebrar esta forma de arte.</p>
+
+        <section id="parrafos" class="fade-in-up stagger-1">
+            <h2 class="text-4xl font-bold text-orange-500 border-b-4 border-orange-500 pb-3 inline-block">¿Qué es el Anime?</h2>
+            <div class="mt-6 space-y-6 text-lg leading-relaxed text-gray-300">
+                <p>El anime, un término que proviene de la abreviatura de "animation" en japonés, se refiere a la animación producida en Japón...</p>
+                <p>Desde sus inicios en el siglo XX, el anime ha evolucionado gracias a pioneros como Osamu Tezuka...</p>
+                <p>El impacto cultural del anime es inmenso, influyendo en la moda, la música y el cine global...</p>
+            </div>
         </section>
-        <!-- Sección de lista de animes recomendados -->
-        <section id="lista">
-            <h2>Top 5 Animes Recomendados</h2>
-            <ul>
-                <li>Death Note - Un thriller psicológico sobre un cuaderno que puede matar a cualquiera cuyo nombre se escriba en él.</li>
-                <li>Attack on Titan - Una historia épica de supervivencia contra gigantes devoradores de humanos.</li>
-                <li>Fullmetal Alchemist: Brotherhood - Aventura de dos hermanos en busca de la piedra filosofal.</li>
-                <li>One Piece - Las aventuras de un pirata en busca del tesoro definitivo.</li>
-                <li>Naruto - La jornada de un ninja joven para convertirse en el líder de su aldea.</li>
+
+        <section id="lista" class="fade-in-up stagger-2">
+            <h2 class="text-4xl font-bold text-orange-500 border-b-4 border-orange-500 pb-3 inline-block">Top 5 Animes Recomendados</h2>
+            <ul class="mt-8 space-y-6">
+                <li class="anime-card bg-[#1e1e1e] p-6 rounded-lg shadow-xl border border-gray-800">
+                    <strong class="text-orange-500">Death Note</strong> - Un thriller psicológico sobre un cuaderno que puede matar...
+                </li>
+                <li class="anime-card bg-[#1e1e1e] p-6 rounded-lg shadow-xl border border-gray-800">
+                    <strong class="text-orange-500">Attack on Titan</strong> - Una historia épica de supervivencia contra gigantes...
+                </li>
+                <li class="anime-card bg-[#1e1e1e] p-6 rounded-lg shadow-xl border border-gray-800">
+                    <strong class="text-orange-500">Fullmetal Alchemist: Brotherhood</strong> - Aventura de dos hermanos...
+                </li>
+                <li class="anime-card bg-[#1e1e1e] p-6 rounded-lg shadow-xl border border-gray-800">
+                    <strong class="text-orange-500">One Piece</strong> - Las aventuras de un pirata en busca del tesoro...
+                </li>
+                <li class="anime-card bg-[#1e1e1e] p-6 rounded-lg shadow-xl border border-gray-800">
+                    <strong class="text-orange-500">Naruto</strong> - La jornada de un ninja joven...
+                </li>
             </ul>
         </section>
-        <!-- Sección de galería de imágenes -->
-        <section id="graficos">
-            <h2>Galería de Imágenes</h2>
-            <img src="https://m.media-amazon.com/images/S/pv-target-images/82d449a8fb2604a42c68376608c999216302fedb61011888f71c4f2093e16148.jpg" alt="Personaje de Anime 1">
-            <img src="https://imgsrv.crunchyroll.com/cdn-cgi/image/fit=cover,format=auto,quality=85,width=1920/keyart/GY5P48XEY-backdrop_wide" alt="Personaje de Anime 2">
-            <img src="https://m.media-amazon.com/images/S/pv-target-images/76760bfa32f7d503ec345d067f5b69cfd2825ed5a6f5b75a7566ac9ca4847dd7._SX1080_FMjpg_.jpg" alt="Personaje de Anime 3">
+
+        <section id="graficos" class="fade-in-up stagger-3">
+            <h2 class="text-4xl font-bold text-orange-500 border-b-4 border-orange-500 pb-3 inline-block">Galería de Imágenes</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-8">
+                <div class="img-container glow">
+                    <img src="https://m.media-amazon.com/images/S/pv-target-images/82d449a8fb2604a42c68376608c999216302fedb61011888f71c4f2093e16148.jpg" alt="Anime 1" class="zoom-img w-full object-cover h-64">
+                </div>
+                <div class="img-container glow">
+                    <img src="https://imgsrv.crunchyroll.com/cdn-cgi/image/fit=cover,format=auto,quality=85,width=1920/keyart/GY5P48XEY-backdrop_wide" alt="Anime 2" class="zoom-img w-full object-cover h-64">
+                </div>
+                <div class="img-container glow">
+                    <img src="https://m.media-amazon.com/images/S/pv-target-images/76760bfa32f7d503ec345d067f5b69cfd2825ed5a6f5b75a7566ac9ca4847dd7._SX1080_FMjpg_.jpg" alt="Anime 3" class="zoom-img w-full object-cover h-64">
+                </div>
+            </div>
         </section>
-        <!-- Sección de videos relacionados -->
-        <section id="videos">
-            <h2>Videos Relacionados</h2>
-            <iframe width="560" height="315" src="https://www.youtube.com/embed/KmMYUt6Vu2k?si=1ExtsR_uKlWu_wI4" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-            <iframe width="560" height="315" src="https://www.youtube.com/embed/wPFeBxt7VXI?si=vfyQKki429NPsn19" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+
+        <section id="videos" class="fade-in-up stagger-4">
+            <h2 class="text-4xl font-bold text-orange-500 border-b-4 border-orange-500 pb-3 inline-block">Videos Relacionados</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-10 mt-8">
+                <div class="glow rounded-lg overflow-hidden">
+                    <iframe class="w-full" height="315" src="https://www.youtube.com/embed/KmMYUt6Vu2k" title="Anime Trailer" allowfullscreen></iframe>
+                </div>
+                <div class="glow rounded-lg overflow-hidden">
+                    <iframe class="w-full" height="315" src="https://www.youtube.com/embed/wPFeBxt7VXI" title="Anime Trailer" allowfullscreen></iframe>
+                </div>
+            </div>
         </section>
-        <!-- Sección del formulario al final de la página principal -->
-        <section id="formulario">
-            <h2>Formulario para Enviar Tu Anime Favorito</h2>
-            <!-- Formulario con método POST y al menos 10 entradas de datos -->
-            <form method="POST" action="index.php">
-                <!-- Entrada 1: Nombre del usuario -->
-                <label for="nombre">Tu Nombre:</label>
-                <input type="text" id="nombre" name="nombre" required>
-                
-                <!-- Entrada 2: Email del usuario -->
-                <label for="email">Tu Email:</label>
-                <input type="email" id="email" name="email" required>
-                
-                <!-- Entrada 3: Edad del usuario -->
-                <label for="edad">Tu Edad:</label>
-                <input type="number" id="edad" name="edad" min="1" required>
-                
-                <!-- Entrada 4: Anime favorito -->
-                <label for="anime_favorito">Anime Favorito:</label>
-                <input type="text" id="anime_favorito" name="anime_favorito" required>
-                
-                <!-- Entrada 5: Género del anime (select) -->
-                <label for="genero">Género del Anime:</label>
-                <select id="genero" name="genero" required>
-                    <option value="">Selecciona un género</option>
-                    <option value="accion">Acción</option>
-                    <option value="aventura">Aventura</option>
-                    <option value="romance">Romance</option>
-                    <option value="ciencia_ficcion">Ciencia Ficción</option>
-                    <option value="fantasia">Fantasía</option>
-                </select>
-                
-                <!-- Entrada 6: Calificación (número) -->
-                <label for="calificacion">Calificación (1-10):</label>
-                <input type="number" id="calificacion" name="calificacion" min="1" max="10" required>
-                
-                <!-- Entrada 7: Episodios vistos -->
-                <label for="episodios_vistos">Episodios Vistos:</label>
-                <input type="number" id="episodios_vistos" name="episodios_vistos" min="0" required>
-                
-                <!-- Entrada 8: Recomendarías? (radio) -->
-                <label>¿Lo Recomendarías?</label>
-                <input type="radio" id="recomendar_si" name="recomendar" value="si" required>
-                <label for="recomendar_si">Sí</label>
-                <input type="radio" id="recomendar_no" name="recomendar" value="no">
-                <label for="recomendar_no">No</label>
-                
-                <!-- Entrada 9: Suscribirse a newsletter (checkbox) -->
-                <label for="newsletter">Suscribirse a Newsletter:</label>
-                <input type="checkbox" id="newsletter" name="newsletter" value="si">
-                
-                <!-- Entrada 10: Razón por la que es favorito (textarea) -->
-                <label for="razon">¿Por qué es tu favorito?</label>
-                <textarea id="razon" name="razon" rows="4" required></textarea>
-                
-                <!-- Botón de envío -->
-                <input type="submit" value="Enviar">
+
+        <!-- Formulario -->
+        <section id="formulario" class="bg-[#1e1e1e] p-10 rounded-xl shadow-2xl border border-gray-800 glow fade-in-up stagger-5">
+            <h2 class="text-4xl font-bold text-orange-500 mb-8 text-center">Envía Tu Anime Favorito</h2>
+            <form method="POST" action="index.php" class="space-y-6">
+                <div>
+                    <label class="block text-orange-500 font-bold mb-2">Tu Nombre</label>
+                    <input type="text" name="nombre" required class="form-input w-full px-4 py-3 bg-[#121212] border border-gray-700 rounded-lg focus:outline-none focus:border-orange-500">
+                </div>
+
+                <div>
+                    <label class="block text-orange-500 font-bold mb-2">Tu Email</label>
+                    <input type="email" name="email" required class="form-input w-full px-4 py-3 bg-[#121212] border border-gray-700 rounded-lg focus:outline-none focus:border-orange-500">
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <label class="block text-orange-500 font-bold mb-2">Edad</label>
+                        <input type="number" name="edad" min="1" required class="form-input w-full px-4 py-3 bg-[#121212] border border-gray-700 rounded-lg focus:outline-none focus:border-orange-500">
+                    </div>
+                    <div>
+                        <label class="block text-orange-500 font-bold mb-2">Calificación (1-10)</label>
+                        <input type="number" name="calificacion" min="1" max="10" required class="form-input w-full px-4 py-3 bg-[#121212] border border-gray-700 rounded-lg focus:outline-none focus:border-orange-500">
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-orange-500 font-bold mb-2">Anime Favorito</label>
+                    <input type="text" name="anime_favorito" required class="form-input w-full px-4 py-3 bg-[#121212] border border-gray-700 rounded-lg focus:outline-none focus:border-orange-500">
+                </div>
+
+                <div>
+                    <label class="block text-orange-500 font-bold mb-2">Género</label>
+                    <select name="genero" required class="form-input w-full px-4 py-3 bg-[#121212] border border-gray-700 rounded-lg focus:outline-none focus:border-orange-500">
+                        <option value="">Selecciona un género</option>
+                        <option value="accion">Acción</option>
+                        <option value="aventura">Aventura</option>
+                        <option value="romance">Romance</option>
+                        <option value="ciencia_ficcion">Ciencia Ficción</option>
+                        <option value="fantasia">Fantasía</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label class="block text-orange-500 font-bold mb-2">Episodios Vistos</label>
+                    <input type="number" name="episodios_vistos" min="0" required class="form-input w-full px-4 py-3 bg-[#121212] border border-gray-700 rounded-lg focus:outline-none focus:border-orange-500">
+                </div>
+
+                <div>
+                    <label class="block text-orange-500 font-bold mb-4">¿Lo recomendarías?</label>
+                    <div class="flex gap-8">
+                        <label class="flex items-center cursor-pointer"><input type="radio" name="recomendar" value="si" required class="mr-3"> <span>Sí</span></label>
+                        <label class="flex items-center cursor-pointer"><input type="radio" name="recomendar" value="no" class="mr-3"> <span>No</span></label>
+                    </div>
+                </div>
+
+                <div>
+                    <label class="flex items-center cursor-pointer">
+                        <input type="checkbox" name="newsletter" value="si" class="mr-3">
+                        <span class="text-orange-500 font-bold">Suscribirse al Newsletter</span>
+                    </label>
+                </div>
+
+                <div>
+                    <label class="block text-orange-500 font-bold mb-2">¿Por qué es tu favorito?</label>
+                    <textarea name="razon" rows="4" required class="form-input w-full px-4 py-3 bg-[#121212] border border-gray-700 rounded-lg focus:outline-none focus:border-orange-500"></textarea>
+                </div>
+
+                <div class="text-center">
+                    <button type="submit" class="pulse-btn bg-orange-600 hover:bg-orange-700 text-black font-bold text-xl py-4 px-12 rounded-lg transition transform hover:scale-105 glow">
+                        Enviar Formulario
+                    </button>
+                </div>
             </form>
         </section>
     </main>
-    <!-- Pie de página -->
-    <footer>
-        <p>&copy; 2025 Anime World. Todos los derechos reservados.</p>
-        <p>Contacto: info@animeworld.com</p>
+
+    <!-- Footer -->
+    <footer class="bg-black text-center py-8 border-t border-gray-800 mt-20 relative z-10">
+        <p class="text-gray-400">&copy; 2025 Anime World. Todos los derechos reservados.</p>
+        <p class="text-orange-500">Contacto: info@animeworld.com</p>
     </footer>
+
+    <script>
+        // Crear partículas flotantes
+        const particlesContainer = document.getElementById('particles');
+        for (let i = 0; i < 50; i++) {
+            const particle = document.createElement('div');
+            particle.className = 'particle';
+            particle.style.left = Math.random() * 100 + '%';
+            particle.style.animationDelay = Math.random() * 15 + 's';
+            particle.style.animationDuration = (Math.random() * 10 + 10) + 's';
+            particlesContainer.appendChild(particle);
+        }
+
+        // Intersection Observer para animaciones al hacer scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -100px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.fade-in-up').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Smooth scroll para los enlaces del navbar
+        document.querySelectorAll('nav a').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            });
+        });
+    </script>
 </body>
 </html>
